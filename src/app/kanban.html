@@ -1,0 +1,64 @@
+<div class="h-dvh p-6 lg:p-8 overflow-x-auto">
+  <div
+    class="flex gap-4 items-start"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    [cdkDropListData]="columns()"
+    (cdkDropListDropped)="dropColumn($event)"
+  >
+    @for (column of columns(); track trackByColumnId($index, column)) {
+      <div
+        class="card bg-base-100 border border-base-content/10 flex-1 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+        cdkDrag>
+        <div
+          class="card-body bg-base-200 rounded-t-2xl border-b border-base-content/10 flex flex-row justify-between items-center cursor-grab hover:bg-base-300 transition-colors"
+          cdkDragHandle>
+          <h1 class="card-title text-base lg:text-lg font-bold m-0 flex items-center gap-2">
+            <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+            {{ column.title }}
+          </h1>
+          <div class="flex items-center gap-2">
+            <span class="badge badge-sm badge-primary font-semibold">{{ column.items.length }}</span>
+            <lucide-icon [img]="GripVerticalIcon" [size]="18" class="text-primary/40 group-hover:text-primary/70 transition-colors"></lucide-icon>
+          </div>
+        </div>
+
+        <div
+          class="p-3 lg:p-4 flex-1 overflow-y-auto max-h-170 flex flex-col gap-3 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+          cdkDropList
+          [id]="'column-' + column.id"
+          [cdkDropListData]="column.items"
+          [cdkDropListConnectedTo]="columnIds()"
+          (cdkDropListDropped)="dropItem($event, column.id)"
+        >
+          @for (item of column.items; track trackByItemId($index, item)) {
+            <div
+              class="card bg-base-100 shadow-md cursor-grab backdrop-blur-sm"
+              cdkDrag>
+              <div class="card-body p-3 lg:p-4">
+                <div class="flex justify-between items-start gap-2">
+                  <div class="flex-1">
+                    <p class="text-sm lg:text-base leading-relaxed text-base-content font-medium">{{ item.title }}</p>
+                    <div class="flex items-center gap-2 mt-2">
+                      <span class="badge badge-xs badge-ghost">Task</span>
+                      <span class="text-xs text-base-content/60">• 2h</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (column.items.length === 0) {
+            <div class="flex-1 flex items-center justify-center p-8 text-center">
+              <div class="text-base-content/40">
+                <lucide-icon [img]="InboxIcon" [size]="48" class="mb-2 mx-auto"></lucide-icon>
+                <p class="text-sm">Aucune tâche</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
