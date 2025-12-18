@@ -1,12 +1,11 @@
 services:
-  kanbano:
+  kanban:
     build:
       context: .
       dockerfile: ./Dockerfile
       cache_from:
         - node:24-alpine
         - caddy:2-alpine
-    container_name: kanbano
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.kanbano.rule=Host(`kanban.kanbano.fr`)"
