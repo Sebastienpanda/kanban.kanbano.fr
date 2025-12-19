@@ -1,17 +1,18 @@
 <div class="flex h-dvh overflow-hidden bg-base-200">
   <app-sidebar
-    [workplaces]="workplaces()"
+    (sidebarToggled)="onSidebarToggled()"
+    (workplaceSelected)="onWorkplaceSelected($event)"
     [activeWorkplaceId]="activeWorkplaceId()"
     [collapsed]="sidebarCollapsed()"
-    (workplaceSelected)="onWorkplaceSelected($event)"
-    (sidebarToggled)="onSidebarToggled()"
+    [workplaces]="workplaces()"
   />
 
   <div class="flex-1 flex flex-col overflow-hidden">
-    <header class="bg-base-300 border-b border-base-content/10 px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between shadow-lg backdrop-blur-xl">
+    <header
+      class="bg-base-300 border-b border-base-content/10 px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between shadow-lg backdrop-blur-xl">
       <div class="flex items-center gap-2 lg:gap-4 flex-1 min-w-0">
         <!-- Mobile menu button -->
-        <button class="btn btn-ghost btn-sm btn-circle md:hidden" (click)="onSidebarToggled()">
+        <button (click)="onSidebarToggled()" class="btn btn-ghost btn-sm btn-circle md:hidden">
           <lucide-icon [img]="MenuIcon" [size]="20"></lucide-icon>
         </button>
 
@@ -26,25 +27,20 @@
       </div>
 
       <div class="flex items-center gap-2 lg:gap-3">
-        <button class="btn btn-primary btn-sm gap-2 shadow-lg hover:scale-105 transition-transform hidden sm:flex">
+        <button (click)="openNewTaskModal()"
+                class="btn btn-primary btn-sm gap-2 shadow-lg hover:scale-105 transition-transform hidden sm:flex">
           <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
           <span class="hidden lg:inline">Nouvelle tâche</span>
         </button>
-        <button class="btn btn-primary btn-sm btn-circle sm:hidden">
+        <button (click)="openNewTaskModal()" class="btn btn-primary btn-sm btn-circle sm:hidden">
           <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
         </button>
-        <button class="btn btn-ghost btn-sm btn-circle hidden sm:flex">
-          <lucide-icon [img]="BellIcon" [size]="18"></lucide-icon>
-        </button>
-        <button class="btn btn-ghost btn-sm btn-circle" (click)="toggleTheme()">
+        <button (click)="toggleTheme()" class="btn btn-ghost btn-sm btn-circle">
           @if (isDarkMode()) {
             <lucide-icon [img]="SunIcon" [size]="18"></lucide-icon>
           } @else {
             <lucide-icon [img]="MoonIcon" [size]="18"></lucide-icon>
           }
-        </button>
-        <button class="btn btn-ghost btn-sm btn-circle">
-          <lucide-icon [img]="SettingsIcon" [size]="18"></lucide-icon>
         </button>
       </div>
     </header>
@@ -54,8 +50,119 @@
         <app-kanban
           [columns]="activeColumns()"
           [onColumnsChange]="onColumnsChange.bind(this)"
+          [onDeleteTask]="confirmDeleteTask.bind(this)"
+          [onEditTask]="openEditTaskModal.bind(this)"
         />
       }
     </main>
   </div>
+
+  <!-- Modal pour nouvelle tâche -->
+  @if (showNewTaskModal()) {
+    <div class="modal modal-open">
+      <div class="modal-box">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-lg">Nouvelle tâche</h3>
+          <button (click)="closeNewTaskModal()" class="btn btn-sm btn-ghost btn-circle">
+            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
+          </button>
+        </div>
+
+        <div class="form-control w-full mb-4">
+          <label class="label">
+            <span class="label-text">Titre de la tâche</span>
+          </label>
+          <input
+            (keyup.enter)="addNewTask()"
+            [(ngModel)]="newTaskTitle"
+            class="input input-bordered w-full"
+            placeholder="Entrez le titre de la tâche"
+            type="text"
+          />
+        </div>
+
+        <div class="form-control w-full mb-6">
+          <label class="label">
+            <span class="label-text">Colonne</span>
+          </label>
+          <select [(ngModel)]="selectedColumnId" class="select select-bordered w-full">
+            @for (column of activeColumns(); track column.id) {
+              <option [value]="column.id">{{ column.title }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="modal-action">
+          <button (click)="closeNewTaskModal()" class="btn btn-ghost">Annuler</button>
+          <button (click)="addNewTask()" [disabled]="!newTaskTitle().trim()" class="btn btn-primary">
+            <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
+            Ajouter
+          </button>
+        </div>
+      </div>
+      <div (click)="closeNewTaskModal()" class="modal-backdrop"></div>
+    </div>
+  }
+
+  <!-- Modal d'édition de tâche -->
+  @if (showEditTaskModal()) {
+    <div class="modal modal-open">
+      <div class="modal-box">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-lg">Modifier la tâche</h3>
+          <button (click)="closeEditTaskModal()" class="btn btn-sm btn-ghost btn-circle">
+            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
+          </button>
+        </div>
+
+        <div class="form-control w-full mb-6">
+          <label class="label">
+            <span class="label-text">Titre de la tâche</span>
+          </label>
+          <input
+            (keyup.enter)="saveEditTask()"
+            [(ngModel)]="editTaskTitle"
+            class="input input-bordered w-full"
+            placeholder="Entrez le titre de la tâche"
+            type="text"
+          />
+        </div>
+
+        <div class="modal-action">
+          <button (click)="closeEditTaskModal()" class="btn btn-ghost">Annuler</button>
+          <button (click)="saveEditTask()" [disabled]="!editTaskTitle().trim()" class="btn btn-primary">
+            <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+      <div (click)="closeEditTaskModal()" class="modal-backdrop"></div>
+    </div>
+  }
+
+  <!-- Modal de confirmation de suppression -->
+  @if (showDeleteConfirm()) {
+    <div class="modal modal-open">
+      <div class="modal-box">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-lg">Confirmer la suppression</h3>
+          <button (click)="closeDeleteConfirm()" class="btn btn-sm btn-ghost btn-circle">
+            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
+          </button>
+        </div>
+
+        <p class="py-4">Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.</p>
+
+        <div class="modal-action">
+          <button (click)="closeDeleteConfirm()" class="btn btn-ghost">Annuler</button>
+          <button (click)="deleteTask()" class="btn btn-error">
+            Supprimer
+          </button>
+        </div>
+      </div>
+      <div (click)="closeDeleteConfirm()" class="modal-backdrop"></div>
+    </div>
+  }
 </div>
+<ngx-sonner-toaster closeButton position="top-right" richColors/>
+

@@ -1,6 +1,6 @@
 import { Component, signal, computed, input } from '@angular/core';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { LucideAngularModule, GripVertical, Inbox, Plus, MoreVertical } from 'lucide-angular';
+import { LucideAngularModule, GripVertical, Inbox, Plus, MoreVertical, Edit2, Trash2 } from 'lucide-angular';
 
 export interface KanbanItem {
   id: number;
@@ -29,11 +29,15 @@ export interface Workplace {
 export class Kanban {
   readonly columns = input.required<KanbanColumn[]>();
   readonly onColumnsChange = input.required<(columns: KanbanColumn[]) => void>();
+  readonly onEditTask = input.required<(item: KanbanItem, columnId: number) => void>();
+  readonly onDeleteTask = input.required<(itemId: number, columnId: number) => void>();
 
   protected readonly GripVerticalIcon = GripVertical;
   protected readonly InboxIcon = Inbox;
   protected readonly PlusIcon = Plus;
   protected readonly MoreVerticalIcon = MoreVertical;
+  protected readonly EditIcon = Edit2;
+  protected readonly TrashIcon = Trash2;
 
   protected readonly columnIds = computed(() =>
     this.columns().map(col => `column-${col.id}`)

@@ -1,6 +1,6 @@
-import { Component, input, output } from '@angular/core';
-import { Workplace } from './kanban';
-import { LucideAngularModule, Rocket, ChevronLeft, ChevronRight, Plus } from 'lucide-angular';
+import {Component, input, output} from '@angular/core';
+import {Workplace} from './kanban';
+import {ChevronLeft, ChevronRight, LucideAngularModule, MessageCircle, Plus, Rocket} from 'lucide-angular';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,7 +11,7 @@ import { LucideAngularModule, Rocket, ChevronLeft, ChevronRight, Plus } from 'lu
            [class.w-20]="collapsed()"
            [class.-translate-x-full]="collapsed() && isMobile()"
            [class.translate-x-0]="!collapsed() || !isMobile()">
-      <div class="p-4 flex items-center justify-between border-b border-base-content/10">
+      <div class="p-4 flex items-center border-b border-base-content/10" [class]="collapsed() ? 'justify-center': 'justify-between'">
         @if (!collapsed()) {
             <h1 class="text-xl font-bold">
               Kanbano
@@ -37,16 +37,15 @@ import { LucideAngularModule, Rocket, ChevronLeft, ChevronRight, Plus } from 'lu
         <div class="space-y-2">
           @for (workplace of workplaces(); track workplace.id) {
             <button
-              class="w-full btn btn-ghost justify-start gap-3 group relative overflow-hidden transition-all duration-200"
+              class="w-full btn btn-ghost gap-3 group relative overflow-hidden transition-all duration-200"
+              [class]="collapsed() ? 'justify-center p-0': 'justify-start'"
               [class.btn-active]="workplace.id === activeWorkplaceId()"
-              [class.bg-primary/10]="workplace.id === activeWorkplaceId()"
-              [class.hover:bg-base-content/5]="workplace.id !== activeWorkplaceId()"
               (click)="selectWorkplace(workplace.id)">
               @if (workplace.id === activeWorkplaceId()) {
                 <div class="absolute inset-y-0 left-0 w-1 bg-primary rounded-r"></div>
               }
-              <div [class.ml-2]="workplace.id === activeWorkplaceId()" class="flex items-center justify-center">
-                <lucide-icon [img]="RocketIcon" [size]="20" class="text-primary"></lucide-icon>
+              <div [class.ml-2]="workplace.id === activeWorkplaceId()" class="flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-12">
+                <lucide-icon [img]="RocketIcon" [size]="20" class="text-primary group-hover:text-secondary transition-colors duration-200"></lucide-icon>
               </div>
               @if (!collapsed()) {
                 <span class="flex-1 text-left truncate font-medium">{{ workplace.name }}</span>
@@ -55,40 +54,26 @@ import { LucideAngularModule, Rocket, ChevronLeft, ChevronRight, Plus } from 'lu
             </button>
           }
         </div>
-
-        <!-- Add Workplace Button -->
-        @if (!collapsed()) {
-          <button class="w-full btn btn-outline btn-sm gap-2 mt-4 hover:btn-primary transition-all duration-200">
-            <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
-            <span>Nouveau workplace</span>
-          </button>
-        } @else {
-          <button class="w-full btn btn-ghost btn-sm mt-4">
-            <lucide-icon [img]="PlusIcon" [size]="20"></lucide-icon>
-          </button>
-        }
       </div>
 
       <!-- Footer -->
       <div class="p-4 border-t border-base-content/10">
         @if (!collapsed()) {
-          <div class="flex items-center gap-3 p-3 rounded-lg bg-base-content/5 hover:bg-base-content/10 transition-all cursor-pointer">
-            <div class="avatar placeholder">
-              <div class="bg-primary text-primary-content rounded-full w-10">
-                <span class="text-sm font-bold">JD</span>
-              </div>
+          <a href="https://discord.gg/Yghwwbku" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 rounded-lg bg-primary/10 hover:bg-primary/20 transition-all cursor-pointer group">
+            <div class="flex items-center justify-center bg-[#5865F2] text-white rounded-full w-10 h-10 group-hover:scale-110 transition-transform">
+              <lucide-icon [img]="DiscordIcon" [size]="24"></lucide-icon>
             </div>
             <div class="flex-1 min-w-0">
-              <div class="font-semibold text-sm truncate">John Doe</div>
-              <div class="text-xs text-base-content/60">john.doe@example.com</div>
+              <div class="font-semibold text-sm">Rejoindre le Discord</div>
+              <div class="text-xs text-base-content/60">Communauté & Support</div>
             </div>
-          </div>
+          </a>
         } @else {
-          <div class="avatar placeholder">
-            <div class="bg-primary text-primary-content rounded-full w-10 mx-auto">
-              <span class="text-sm font-bold">JD</span>
+          <a href="https://discord.gg/Yghwwbku" target="_blank" rel="noopener noreferrer" class="flex justify-center group">
+            <div class="flex items-center justify-center bg-[#5865F2] text-white rounded-full w-10 h-10 mx-auto hover:scale-110 transition-transform cursor-pointer">
+              <lucide-icon [img]="DiscordIcon" [size]="24"></lucide-icon>
             </div>
-          </div>
+          </a>
         }
       </div>
     </aside>
@@ -111,6 +96,7 @@ export class Sidebar {
   protected readonly ChevronLeftIcon = ChevronLeft;
   protected readonly ChevronRightIcon = ChevronRight;
   protected readonly PlusIcon = Plus;
+  protected readonly DiscordIcon = MessageCircle;
 
   protected selectWorkplace(id: number): void {
     this.workplaceSelected.emit(id);
