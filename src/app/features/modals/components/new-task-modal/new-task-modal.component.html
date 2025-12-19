@@ -25,7 +25,11 @@
         <label class="label">
           <span class="label-text">Colonne</span>
         </label>
-        <select [value]="selectedColumnId()" class="select select-bordered w-full" disabled>
+        <select
+          [ngModel]="currentColumnId()"
+          (ngModelChange)="currentColumnId.set($event)"
+          class="select select-bordered w-full"
+        >
           @for (column of columns(); track column.id) {
             <option [ngValue]="column.id">{{ column.title }}</option>
           }

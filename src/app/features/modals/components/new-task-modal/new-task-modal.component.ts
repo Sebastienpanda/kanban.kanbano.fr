@@ -1,4 +1,4 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LucideAngularModule, Plus, X } from 'lucide-angular';
 
@@ -24,12 +24,22 @@ export class NewTaskModalComponent {
 
   // Local state
   protected readonly taskTitle = signal('');
+  protected readonly currentColumnId = signal<number | null>(null);
   protected readonly PlusIcon = Plus;
   protected readonly XIcon = X;
 
+  constructor() {
+    // Sync currentColumnId with selectedColumnId when modal opens
+    effect(() => {
+      if (this.isOpen()) {
+        this.currentColumnId.set(this.selectedColumnId());
+      }
+    });
+  }
+
   protected onSubmit(): void {
     const title = this.taskTitle().trim();
-    const columnId = this.selectedColumnId();
+    const columnId = this.currentColumnId();
 
     if (!title || columnId === null) return;
 
