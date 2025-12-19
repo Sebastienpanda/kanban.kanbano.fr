@@ -35,7 +35,8 @@ export interface Workplace {
 })
 export class Kanban {
   readonly columns = input.required<KanbanColumn[]>();
-  readonly onColumnsChange = input.required<(columns: KanbanColumn[]) => void>();
+  readonly onColumnReorder = input.required<(previousIndex: number, currentIndex: number) => void>();
+  readonly onItemMove = input.required<(taskId: number, sourceColumnId: number, targetColumnId: number, newIndex: number) => void>();
   readonly onCreateTask = input.required<(columnId: number) => void>();
   readonly onEditTask = input.required<(item: KanbanItem, columnId: number) => void>();
   readonly onDeleteTask = input.required<(itemId: number, columnId: number) => void>();
@@ -53,30 +54,24 @@ export class Kanban {
   protected readonly Plus = Plus;
 
   protected dropColumn(event: CdkDragDrop<KanbanColumn[]>): void {
-    const cols = [...this.columns()];
-    moveItemInArray(cols, event.previousIndex, event.currentIndex);
-    this.onColumnsChange()(cols);
+    this.onColumnReorder()(event.previousIndex, event.currentIndex);
   }
 
-  protected dropItem(event: CdkDragDrop<KanbanItem[]>, columnId: number): void {
-    const cols = [...this.columns()];
-    const sourceColumn = cols.find(col => col.items === event.previousContainer.data);
-    const targetColumn = cols.find(col => col.id === columnId);
+  protected dropItem(event: CdkDragDrop<KanbanItem[]>, targetColumnId: number): void {
+    const sourceColumn = this.columns().find(col => col.items === event.previousContainer.data);
+    const targetColumn = this.columns().find(col => col.id === targetColumnId);
 
     if (!sourceColumn || !targetColumn) return;
 
-    if (event.previousContainer === event.container) {
-      moveItemInArray(targetColumn.items, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+    const item = sourceColumn.items[event.previousIndex];
+    if (!item) return;
 
-    this.onColumnsChange()(cols);
+    this.onItemMove()(
+      item.id,
+      sourceColumn.id,
+      targetColumn.id,
+      event.currentIndex
+    );
   }
 
   protected trackByColumnId(_index: number, column: KanbanColumn): number {

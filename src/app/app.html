@@ -48,10 +48,11 @@
       @if (activeWorkplace()) {
         <app-kanban
           [columns]="activeColumns()"
-          [onColumnsChange]="onColumnsChange.bind(this)"
+          [onColumnReorder]="onColumnReorder.bind(this)"
           [onCreateTask]="openNewTaskModalForColumn.bind(this)"
           [onDeleteTask]="confirmDeleteTask.bind(this)"
           [onEditTask]="openEditTaskModal.bind(this)"
+          [onItemMove]="onItemMove.bind(this)"
         />
       }
     </main>
@@ -59,26 +60,27 @@
 
   <!-- New Task Modal (Clean Architecture Component) -->
   <app-new-task-modal
-    [isOpen]="showNewTaskModal()"
-    [columns]="modalColumns()"
-    [selectedColumnId]="selectedColumnId()"
-    (taskCreated)="onTaskCreated($event)"
     (closed)="closeNewTaskModal()"
+    (taskCreated)="onTaskCreated($event)"
+    [columns]="modalColumns()"
+    [isOpen]="showNewTaskModal()"
+    [selectedColumnId]="selectedColumnId()"
   />
 
   <!-- Edit Task Modal (Clean Architecture Component) -->
   <app-edit-task-modal
+    (closed)="closeEditTaskModal()"
+    (taskUpdated)="onTaskUpdated($event)"
     [isOpen]="showEditTaskModal()"
     [task]="editingTask()"
-    (taskUpdated)="onTaskUpdated($event)"
-    (closed)="closeEditTaskModal()"
   />
 
   <!-- Delete Confirm Modal (Clean Architecture Component) -->
+
   <app-delete-confirm-modal
-    [isOpen]="showDeleteConfirm()"
-    (confirmed)="onDeleteConfirmed()"
     (cancelled)="closeDeleteConfirm()"
+    (confirmed)="onDeleteConfirmed()"
+    [isOpen]="showDeleteConfirm()"
   />
 </div>
 <ngx-sonner-toaster closeButton position="top-right" richColors/>

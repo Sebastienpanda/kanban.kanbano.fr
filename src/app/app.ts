@@ -94,11 +94,23 @@ export class App {
     await this.themeFacade.toggleTheme();
   }
 
-  // Kanban Column reordering
-  protected async onColumnsChange(columns: KanbanColumn[]): Promise<void> {
-    // Called when columns are drag-dropped
-    // For now, we reload after any change
-    await this.kanbanFacade.loadWorkplace(this.activeWorkplaceId());
+  // Kanban drag and drop handlers
+  protected async onColumnReorder(previousIndex: number, currentIndex: number): Promise<void> {
+    await this.kanbanFacade.reorderColumns({ previousIndex, currentIndex });
+  }
+
+  protected async onItemMove(
+    taskId: number,
+    sourceColumnId: number,
+    targetColumnId: number,
+    newIndex: number
+  ): Promise<void> {
+    await this.kanbanFacade.moveTask({
+      taskId,
+      sourceColumnId,
+      targetColumnId,
+      newIndex,
+    });
   }
 
   // New Task Modal
