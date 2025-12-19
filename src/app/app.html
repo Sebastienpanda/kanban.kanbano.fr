@@ -57,112 +57,29 @@
     </main>
   </div>
 
-  <!-- Modal pour nouvelle tâche -->
-  @if (showNewTaskModal()) {
-    <div class="modal modal-open">
-      <div class="modal-box">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="font-bold text-lg">Nouvelle tâche</h3>
-          <button (click)="closeNewTaskModal()" class="btn btn-sm btn-ghost btn-circle">
-            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
-          </button>
-        </div>
+  <!-- New Task Modal (Clean Architecture Component) -->
+  <app-new-task-modal
+    [isOpen]="showNewTaskModal()"
+    [columns]="modalColumns()"
+    [selectedColumnId]="selectedColumnId()"
+    (taskCreated)="onTaskCreated($event)"
+    (closed)="closeNewTaskModal()"
+  />
 
-        <div class="form-control w-full mb-4">
-          <label class="label">
-            <span class="label-text">Titre de la tâche</span>
-          </label>
-          <input
-            (keyup.enter)="addNewTask()"
-            [(ngModel)]="newTaskTitle"
-            class="input input-bordered w-full"
-            placeholder="Entrez le titre de la tâche"
-            type="text"
-          />
-        </div>
+  <!-- Edit Task Modal (Clean Architecture Component) -->
+  <app-edit-task-modal
+    [isOpen]="showEditTaskModal()"
+    [task]="editingTask()"
+    (taskUpdated)="onTaskUpdated($event)"
+    (closed)="closeEditTaskModal()"
+  />
 
-        <div class="form-control w-full mb-6">
-          <label class="label">
-            <span class="label-text">Colonne</span>
-          </label>
-          <select [(ngModel)]="selectedColumnId" class="select select-bordered w-full">
-            @for (column of activeColumns(); track column.id) {
-              <option [ngValue]="column.id">{{ column.title }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="modal-action">
-          <button (click)="closeNewTaskModal()" class="btn btn-ghost">Annuler</button>
-          <button (click)="addNewTask()" [disabled]="!newTaskTitle().trim()" class="btn btn-primary">
-            <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
-            Ajouter
-          </button>
-        </div>
-      </div>
-      <div (click)="closeNewTaskModal()" class="modal-backdrop"></div>
-    </div>
-  }
-
-  <!-- Modal d'édition de tâche -->
-  @if (showEditTaskModal()) {
-    <div class="modal modal-open">
-      <div class="modal-box">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="font-bold text-lg">Modifier la tâche</h3>
-          <button (click)="closeEditTaskModal()" class="btn btn-sm btn-ghost btn-circle">
-            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
-          </button>
-        </div>
-
-        <div class="form-control w-full mb-6">
-          <label class="label">
-            <span class="label-text">Titre de la tâche</span>
-          </label>
-          <input
-            (keyup.enter)="saveEditTask()"
-            [(ngModel)]="editTaskTitle"
-            class="input input-bordered w-full"
-            placeholder="Entrez le titre de la tâche"
-            type="text"
-          />
-        </div>
-
-        <div class="modal-action">
-          <button (click)="closeEditTaskModal()" class="btn btn-ghost">Annuler</button>
-          <button (click)="saveEditTask()" [disabled]="!editTaskTitle().trim()" class="btn btn-primary">
-            <lucide-icon [img]="PlusIcon" [size]="16"></lucide-icon>
-            Enregistrer
-          </button>
-        </div>
-      </div>
-      <div (click)="closeEditTaskModal()" class="modal-backdrop"></div>
-    </div>
-  }
-
-  <!-- Modal de confirmation de suppression -->
-  @if (showDeleteConfirm()) {
-    <div class="modal modal-open">
-      <div class="modal-box">
-        <div class="flex items-center justify-between mb-4">
-          <h3 class="font-bold text-lg">Confirmer la suppression</h3>
-          <button (click)="closeDeleteConfirm()" class="btn btn-sm btn-ghost btn-circle">
-            <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
-          </button>
-        </div>
-
-        <p class="py-4">Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.</p>
-
-        <div class="modal-action">
-          <button (click)="closeDeleteConfirm()" class="btn btn-ghost">Annuler</button>
-          <button (click)="deleteTask()" class="btn btn-error">
-            Supprimer
-          </button>
-        </div>
-      </div>
-      <div (click)="closeDeleteConfirm()" class="modal-backdrop"></div>
-    </div>
-  }
+  <!-- Delete Confirm Modal (Clean Architecture Component) -->
+  <app-delete-confirm-modal
+    [isOpen]="showDeleteConfirm()"
+    (confirmed)="onDeleteConfirmed()"
+    (cancelled)="closeDeleteConfirm()"
+  />
 </div>
 <ngx-sonner-toaster closeButton position="top-right" richColors/>
 
