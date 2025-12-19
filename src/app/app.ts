@@ -130,6 +130,12 @@ export class App {
     this.selectedColumnId.set(firstColumnId);
   }
 
+  protected openNewTaskModalForColumn(columnId: number): void {
+    this.showNewTaskModal.set(true);
+    this.newTaskTitle.set('');
+    this.selectedColumnId.set(columnId);
+  }
+
   protected closeNewTaskModal(): void {
     this.showNewTaskModal.set(false);
     this.newTaskTitle.set('');

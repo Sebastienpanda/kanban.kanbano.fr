@@ -1,6 +1,13 @@
-import { Component, signal, computed, input } from '@angular/core';
-import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { LucideAngularModule, GripVertical, Inbox, Plus, MoreVertical, Edit2, Trash2 } from 'lucide-angular';
+import {Component, computed, input} from '@angular/core';
+import {
+  CdkDrag,
+  CdkDragDrop,
+  CdkDropList,
+  DragDropModule,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
+import {Edit2, GripVertical, Inbox, LucideAngularModule, MoreVertical, Plus, Trash2} from 'lucide-angular';
 
 export interface KanbanItem {
   id: number;
@@ -29,6 +36,7 @@ export interface Workplace {
 export class Kanban {
   readonly columns = input.required<KanbanColumn[]>();
   readonly onColumnsChange = input.required<(columns: KanbanColumn[]) => void>();
+  readonly onCreateTask = input.required<(columnId: number) => void>();
   readonly onEditTask = input.required<(item: KanbanItem, columnId: number) => void>();
   readonly onDeleteTask = input.required<(itemId: number, columnId: number) => void>();
 
@@ -42,6 +50,7 @@ export class Kanban {
   protected readonly columnIds = computed(() =>
     this.columns().map(col => `column-${col.id}`)
   );
+  protected readonly Plus = Plus;
 
   protected dropColumn(event: CdkDragDrop<KanbanColumn[]>): void {
     const cols = [...this.columns()];
@@ -57,10 +66,8 @@ export class Kanban {
     if (!sourceColumn || !targetColumn) return;
 
     if (event.previousContainer === event.container) {
-      // Déplacement dans la même colonne
       moveItemInArray(targetColumn.items, event.previousIndex, event.currentIndex);
     } else {
-      // Déplacement entre colonnes
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -78,5 +85,9 @@ export class Kanban {
 
   protected trackByItemId(_index: number, item: KanbanItem): number {
     return item.id;
+  }
+
+  protected allowDrop(drag: CdkDrag, drop: CdkDropList): boolean {
+    return true;
   }
 }

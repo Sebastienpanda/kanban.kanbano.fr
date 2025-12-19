@@ -1,4 +1,4 @@
-<div class="flex h-dvh overflow-hidden bg-base-200">
+<div class="flex h-dvh bg-base-100">
   <app-sidebar
     (sidebarToggled)="onSidebarToggled()"
     (workplaceSelected)="onWorkplaceSelected($event)"
@@ -7,11 +7,10 @@
     [workplaces]="workplaces()"
   />
 
-  <div class="flex-1 flex flex-col overflow-hidden">
+  <div class="flex-1 flex flex-col">
     <header
       class="bg-base-300 border-b border-base-content/10 px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between shadow-lg backdrop-blur-xl">
       <div class="flex items-center gap-2 lg:gap-4 flex-1 min-w-0">
-        <!-- Mobile menu button -->
         <button (click)="onSidebarToggled()" class="btn btn-ghost btn-sm btn-circle md:hidden">
           <lucide-icon [img]="MenuIcon" [size]="20"></lucide-icon>
         </button>
@@ -50,6 +49,7 @@
         <app-kanban
           [columns]="activeColumns()"
           [onColumnsChange]="onColumnsChange.bind(this)"
+          [onCreateTask]="openNewTaskModalForColumn.bind(this)"
           [onDeleteTask]="confirmDeleteTask.bind(this)"
           [onEditTask]="openEditTaskModal.bind(this)"
         />
@@ -87,7 +87,7 @@
           </label>
           <select [(ngModel)]="selectedColumnId" class="select select-bordered w-full">
             @for (column of activeColumns(); track column.id) {
-              <option [value]="column.id">{{ column.title }}</option>
+              <option [ngValue]="column.id">{{ column.title }}</option>
             }
           </select>
         </div>
