@@ -1,0 +1,8 @@
+<app-header [isAsideOpen]="asideCache()"/>
+<app-aside (toggleAside)="onCacheAside()" [isAsideOpen]="asideCache()"/>
+
+<main [class]="asideCache() ? 'ml-0' : 'md:ml-64'"
+      class="bg-base-100 flex items-center justify-center h-[calc(100%-81px)] transition-[margin-left] duration-350 ease-in-out">
+    Main
+    <button (click)="onCacheAside()">Ouvrir la sidebar</button>
+</main>

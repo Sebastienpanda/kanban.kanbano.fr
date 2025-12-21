@@ -1,0 +1,22 @@
+@if (isOpen()) {
+    <div class="modal modal-open">
+        <div class="modal-box">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-lg">Confirmer la suppression</h3>
+                <button (click)="onCancel()" class="btn btn-sm btn-ghost btn-circle" type="button">
+                    <lucide-icon [img]="XIcon" [size]="18"></lucide-icon>
+                </button>
+            </div>
+
+            <p class="py-4">Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.</p>
+
+            <div class="modal-action">
+                <button (click)="onCancel()" class="btn btn-ghost" type="button">Annuler</button>
+                <button (click)="onConfirm()" class="btn btn-error" type="button">
+                    Supprimer
+                </button>
+            </div>
+        </div>
+        <div (click)="onCancel()" class="modal-backdrop"></div>
+    </div>
+}
