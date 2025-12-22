@@ -1,6 +1,5 @@
 import { Component, input, output } from "@angular/core";
 import { ChevronLeft, ChevronRight, LucideAngularModule, MessageCircle, Plus, Rocket, } from "lucide-angular";
-import type { Workplace } from "../../../domain/models";
 
 @Component({
 	selector: "app-sidebar",
@@ -30,35 +29,6 @@ import type { Workplace } from "../../../domain/models";
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-3">
-                @if (!collapsed()) {
-                    <div class="text-xs font-semibold text-base-content/60 uppercase tracking-wider px-3 py-2">
-                        Workplaces
-                    </div>
-                }
-                <div class="space-y-2">
-                    @for (workplace of workplaces(); track workplace.id) {
-                        <button
-                            class="w-full btn btn-ghost gap-3 group relative overflow-hidden transition-all duration-200"
-                            [class]="collapsed() ? 'justify-center p-0': 'justify-start'"
-                            [class.btn-active]="workplace.id === activeWorkplaceId()"
-                            (click)="selectWorkplace(workplace.id)">
-                            @if (workplace.id === activeWorkplaceId()) {
-                                <div class="absolute inset-y-0 left-0 w-1 bg-primary rounded-r"></div>
-                            }
-                            <div [class.ml-2]="workplace.id === activeWorkplaceId()"
-                                 class="flex items-center justify-center transition-transform group-hover:scale-110 group-hover:rotate-12">
-                                <lucide-icon [img]="RocketIcon" [size]="20"
-                                             class="text-primary group-hover:text-secondary transition-colors duration-200"></lucide-icon>
-                            </div>
-                            @if (!collapsed()) {
-                                <span class="flex-1 text-left truncate font-medium">{{ workplace.name }}</span>
-                                <span class="badge badge-sm badge-primary">{{ workplace.columns.length }}</span>
-                            }
-                        </button>
-                    }
-                </div>
-            </div>
 
             <!-- Footer -->
             <div class="p-4 border-t border-base-content/10">
@@ -93,7 +63,6 @@ import type { Workplace } from "../../../domain/models";
     `,
 })
 export class Sidebar {
-	readonly workplaces = input.required<Workplace[]>();
 	readonly activeWorkplaceId = input.required<number>();
 	readonly collapsed = input.required<boolean>();
 

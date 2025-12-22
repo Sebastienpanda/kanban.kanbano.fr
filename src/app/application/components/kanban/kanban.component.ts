@@ -8,7 +8,8 @@ import {
 } from "@angular/cdk/drag-drop";
 import { Component, computed, input } from "@angular/core";
 import { Edit2, GripVertical, Inbox, LucideAngularModule, MoreVertical, Plus, Trash2, } from "lucide-angular";
-import type { KanbanColumn, KanbanItem } from "../../../domain/models";
+import type { KanbanColumn } from "../../../domain/models/kanban-column.model";
+import type { KanbanItem } from "../../../domain/models/kanban-item.model";
 
 @Component({
 	selector: "app-kanban",
