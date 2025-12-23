@@ -1,2 +1,2 @@
 [tools]
-"ubi:railwayapp/railpack" = "latest"
+"github:railwayapp/railpack" = "latest"
