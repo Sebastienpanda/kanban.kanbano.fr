@@ -1,0 +1,25 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+out
+.angular
+.next
+
+# Coverage
+coverage
+
+# Generated / external
+public/assets
+*.min.*
+*.lock
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log

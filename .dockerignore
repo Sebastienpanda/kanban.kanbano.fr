@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+.out
+.angular
+
+# VCS
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Logs & temp
+*.log
+.tmp
+.cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests & coverage
+coverage
