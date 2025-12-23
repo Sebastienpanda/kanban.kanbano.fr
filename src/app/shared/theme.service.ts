@@ -3,66 +3,64 @@ import { computed, effect, Injectable, signal } from "@angular/core";
 type ThemMode = "light" | "dark";
 
 @Injectable({
-	providedIn: "root",
+    providedIn: "root",
 })
 export class ThemeService {
-	readonly isDark = signal<boolean>(false);
+    readonly isDark = signal<boolean>(false);
 
-	readonly theme = computed<ThemMode>(() => (this.isDark() ? "dark" : "light"));
+    readonly theme = computed<ThemMode>(() => (this.isDark() ? "dark" : "light"));
 
-	private mediaQuery?: MediaQueryList;
+    private mediaQuery?: MediaQueryList;
 
-	constructor() {
-		this.initTheme();
-		this.listenToSystemTheme();
-		this.syncThemeWithDOM();
-	}
+    constructor() {
+        this.initTheme();
+        this.listenToSystemTheme();
+        this.syncThemeWithDOM();
+    }
 
-	toggle(): void {
-		this.isDark.update((v) => !v);
-	}
+    toggle(): void {
+        this.isDark.update((v) => !v);
+    }
 
-	private initTheme(): void {
-		const saved = localStorage.getItem("theme");
-		const systemDark = globalThis.matchMedia(
-			"(prefers-color-scheme: dark)",
-		).matches;
+    private initTheme(): void {
+        const saved = localStorage.getItem("theme");
+        const systemDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
 
-		const initial = saved ? saved === "dark" : systemDark;
-		this.isDark.set(initial);
-	}
+        const initial = saved ? saved === "dark" : systemDark;
+        this.isDark.set(initial);
+    }
 
-	private listenToSystemTheme(): void {
-		this.mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
+    private listenToSystemTheme(): void {
+        this.mediaQuery = globalThis.matchMedia("(prefers-color-scheme: dark)");
 
-		const listener = (event: MediaQueryListEvent) => {
-			if (!localStorage.getItem("theme")) {
-				this.isDark.set(event.matches);
-			}
-		};
+        const listener = (event: MediaQueryListEvent) => {
+            if (!localStorage.getItem("theme")) {
+                this.isDark.set(event.matches);
+            }
+        };
 
-		this.mediaQuery.addEventListener("change", listener);
+        this.mediaQuery.addEventListener("change", listener);
 
-		effect((onCleanup) => {
-			onCleanup(() => {
-				this.mediaQuery?.removeEventListener("change", listener);
-			});
-		});
-	}
+        effect((onCleanup) => {
+            onCleanup(() => {
+                this.mediaQuery?.removeEventListener("change", listener);
+            });
+        });
+    }
 
-	private syncThemeWithDOM() {
-		effect(() => {
-			const dark = this.isDark();
-			const root = document.documentElement;
+    private syncThemeWithDOM() {
+        effect(() => {
+            const dark = this.isDark();
+            const root = document.documentElement;
 
-			root.classList.add("theme-transition");
+            root.classList.add("theme-transition");
 
-			root.setAttribute("data-theme", dark ? "dark" : "light");
-			root.classList.toggle("dark", dark);
+            root.setAttribute("data-theme", dark ? "dark" : "light");
+            root.classList.toggle("dark", dark);
 
-			localStorage.setItem("theme", dark ? "dark" : "light");
+            localStorage.setItem("theme", dark ? "dark" : "light");
 
-			setTimeout(() => root.classList.remove("theme-transition"), 350);
-		});
-	}
+            setTimeout(() => root.classList.remove("theme-transition"), 350);
+        });
+    }
 }

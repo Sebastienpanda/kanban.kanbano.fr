@@ -1,18 +1,16 @@
-import { type ApplicationConfig, provideBrowserGlobalErrorListeners, } from "@angular/core";
+import { type ApplicationConfig, provideBrowserGlobalErrorListeners } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { routes } from "./app.routes";
-import { WORKPLACE_GATEWAY_TOKEN } from "./application/tokens";
-import { InMemoryWorkplaceGateway } from "./infra/in-memory";
+import { GET_COLUMNS_GATEWAY } from "./application/tokens";
+import { InMemoryKanban } from "./infra/in-memory-kanban";
 
 export const appConfig: ApplicationConfig = {
-	providers: [
-		provideBrowserGlobalErrorListeners(),
-		provideRouter(routes),
-
-		// Gateways - InMemory implementations
-		{
-			provide: WORKPLACE_GATEWAY_TOKEN,
-			useClass: InMemoryWorkplaceGateway,
-		},
-	],
+    providers: [
+        provideBrowserGlobalErrorListeners(),
+        provideRouter(routes),
+        {
+            provide: GET_COLUMNS_GATEWAY,
+            useClass: InMemoryKanban,
+        },
+    ],
 };

@@ -1,4 +1,4 @@
-export interface KanbanItem {
-	id: number;
-	title: string;
-}
+export type Item = {
+    id: string;
+    title: string;
+};

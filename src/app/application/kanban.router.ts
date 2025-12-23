@@ -2,10 +2,10 @@ import type { Routes } from "@angular/router";
 import { Kanban } from "./kanban";
 
 const routes: Routes = [
-	{
-		path: "",
-		component: Kanban,
-	},
+    {
+        path: "",
+        component: Kanban,
+    },
 ];
 
 export default routes;
