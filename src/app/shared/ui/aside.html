@@ -1,0 +1,10 @@
+<aside class="border-base-content/10 bg-base-300 border-r h-dvh">
+    <div class="flex items-center justify-center border-base-content/10 border-b p-6">
+        @if (isAsideOpen()) {
+        <h2 class="text-xl font-bold">Kanbano</h2>
+        }
+        <button (click)="onToggleAside()" class="btn btn-ghost btn-sm btn-circle">
+            <lucide-icon [img]="isAsideOpen() ? ArrowLeft : ArrowRight" />
+        </button>
+    </div>
+</aside>

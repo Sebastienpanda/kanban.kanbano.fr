@@ -1,10 +1,10 @@
 import type { Routes } from "@angular/router";
-import { Kanban } from "./kanban";
+import { MainKanban } from "./main-kanban";
 
 const routes: Routes = [
     {
         path: "",
-        component: Kanban,
+        component: MainKanban,
     },
 ];
 

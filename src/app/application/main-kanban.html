@@ -1,33 +1,10 @@
 <main
-    [class]="isAsideOpen() ? 'ml-0' : 'md:ml-64'"
-    class="bg-base-100 h-[calc(100%-81px)] pt-4 pl-4 transition-[margin-left] duration-350 ease-in-out"
+    [class]="asideOpen() ? 'grid-cols-[255px_minmax(0,1fr)]' : 'grid-cols-[65px_minmax(0,1fr)]'"
+    class="h-dvh grid transition-[grid-template-columns] duration-300 ease-in-out grid-rows-[auto_1fr]"
 >
-    <section cdkDropListGroup cdkScrollable class="flex flex-row gap-4 overflow-x-auto p-4">
-        @for (column of columns(); track column.id) {
-        <div class="card bg-base-100 border-base-content/10 w-80 shrink-0 overflow-hidden rounded-2xl border">
-            <div class="bg-base-200 border-base-content/10 card-title justify-between border-b p-8">
-                <h2 class="text-base lg:text-lg">{{ column.title }}</h2>
-                <span class="badge badge-sm badge-primary">{{ column.items.length }}</span>
-            </div>
-            <ul
-                (cdkDropListDropped)="drop($event)"
-                [cdkDropListData]="column.items"
-                cdkDropList
-                class="card max-h-170 flex-1 gap-4 overflow-y-auto p-4"
-            >
-                @for (item of column.items; track item.id) {
-                <li cdkDrag class="group relative cursor-move rounded-lg">
-                    <div
-                        class="from-primary via-secondary to-accent absolute inset-0 rounded-lg bg-linear-to-r opacity-60 transition-opacity group-hover:opacity-100"
-                    ></div>
-                    <span class="bg-base-300 relative m-px block rounded-lg p-4"> {{ item.title }} </span>
-                </li>
+    <app-aside (toggleAside)="toggleAside()" [isAsideOpen]="asideOpen()" class="row-span-2" />
 
-                } @empty {
-                <p>Aucune tâche</p>
-                }
-            </ul>
-        </div>
-        }
-    </section>
+    <app-header class="col-start-2 row-start-1" />
+
+    <app-kanban class="col-start-2 row-start-2" />
 </main>

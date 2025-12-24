@@ -1,22 +1,52 @@
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
-import { Aside } from "../shared/ui/aside";
-import { Header } from "../shared/ui/header";
-import { MainKanban } from "./main-kanban";
+import {
+    CdkDrag,
+    type CdkDragDrop,
+    CdkDragHandle,
+    CdkDropList,
+    moveItemInArray,
+    transferArrayItem,
+} from "@angular/cdk/drag-drop";
+import { Component, inject } from "@angular/core";
+import type { Column } from "@domain/models/kanban-column.model";
+import type { Item } from "@domain/models/kanban-item.model";
+import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case";
+import { GET_COLUMNS_GATEWAY } from "./tokens";
+import { CdkScrollable } from "@angular/cdk/overlay";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: "app-kanban",
-    imports: [Header, Aside, MainKanban],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-        <app-header [isAsideOpen]="asideCache()" />
-        <app-aside (toggleAside)="onCacheAside()" [isAsideOpen]="asideCache()" />
-        <app-main-kanban [isAsideOpen]="asideCache()" />
-    `,
+    templateUrl: "./kanban.html",
+    styleUrl: "./kanban.css",
+    imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle],
 })
 export class Kanban {
-    protected readonly asideCache = signal<boolean>(false);
+    private readonly useCase = new KanbanColumnsUseCase(inject(GET_COLUMNS_GATEWAY));
 
-    onCacheAside() {
-        this.asideCache.set(!this.asideCache());
+    protected readonly columns = toSignal(this.useCase.all(), {
+        initialValue: [],
+    });
+
+    getConnectedLists(currentIndex: number): string[] {
+        return this.columns()
+            .map((_, index) => `items-list-${index}`)
+            .filter((_, index) => index !== currentIndex);
+    }
+
+    dropColumn(event: CdkDragDrop<Column[]>) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }
+
+    drop(event: CdkDragDrop<Item[]>) {
+        if (event.previousContainer === event.container) {
+            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+            transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                event.previousIndex,
+                event.currentIndex,
+            );
+        }
     }
 }

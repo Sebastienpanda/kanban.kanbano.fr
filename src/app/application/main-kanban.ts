@@ -1,44 +1,21 @@
-import {
-    CdkDrag,
-    type CdkDragDrop,
-    CdkDropList,
-    CdkDropListGroup,
-    moveItemInArray,
-    transferArrayItem,
-} from "@angular/cdk/drag-drop";
-import { CdkScrollable } from "@angular/cdk/overlay";
-import { ChangeDetectionStrategy, Component, inject, input } from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
-import type { Item } from "@domain/models/kanban-item.model";
-import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case";
-import { GET_COLUMNS_GATEWAY } from "./tokens";
+import { Component, signal } from "@angular/core";
+import { Aside } from "../shared/ui/aside";
+import { Header } from "../shared/ui/header";
+import { Kanban } from "./kanban";
 
 @Component({
     selector: "app-main-kanban",
+    imports: [Aside, Header, Kanban],
     templateUrl: "./main-kanban.html",
-    styleUrl: "./main-kanban.css",
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CdkDropList, CdkDropListGroup, CdkDrag, CdkScrollable],
 })
 export class MainKanban {
-    readonly isAsideOpen = input.required<boolean>();
+    readonly asideOpen = signal(false);
 
-    private readonly useCase = new KanbanColumnsUseCase(inject(GET_COLUMNS_GATEWAY));
+    toggleAside() {
+        this.asideOpen.update((v) => !v);
+    }
 
-    protected readonly columns = toSignal(this.useCase.all(), {
-        initialValue: [],
-    });
-
-    drop(event: CdkDragDrop<Item[]>) {
-        if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-            transferArrayItem(
-                event.previousContainer.data,
-                event.container.data,
-                event.previousIndex,
-                event.currentIndex,
-            );
-        }
+    closeAside() {
+        this.asideOpen.set(false);
     }
 }

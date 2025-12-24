@@ -1,16 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, input } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { LucideAngularModule, Moon, Sun } from "lucide-angular";
 import { ThemeService } from "../theme.service";
 
 @Component({
     selector: "app-header",
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [LucideAngularModule],
     template: `
-        <header
-            [class]="isAsideOpen() ? 'ml-20' : 'md:ml-64'"
-            class="bg-base-300 border-base-content/10 flex justify-between border-b p-6 shadow-lg backdrop-blur-xl transition-[margin-left] duration-350 ease-in-out"
-        >
+        <header class="bg-base-300 border-base-content/10 flex justify-between border-b p-6">
             <h1 class="truncate text-lg lg:text-2xl">Mon projet</h1>
             <button
                 (click)="themeService.toggle()"
@@ -37,7 +33,6 @@ import { ThemeService } from "../theme.service";
     `,
 })
 export class Header {
-    readonly isAsideOpen = input.required<boolean>();
     protected readonly themeService = inject(ThemeService);
     protected readonly Sun = Sun;
     protected readonly Moon = Moon;
