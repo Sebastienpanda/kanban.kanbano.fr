@@ -1,0 +1,46 @@
+<section
+    (cdkDropListDropped)="dropColumn($event)"
+    [cdkDropListData]="columns()"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    cdkScrollable
+    class="flex flex-row gap-4 overflow-x-auto p-4 bg-base-100 max-h-220"
+>
+    @for (column of columns(); track column.id; let i = $index) {
+    <div cdkDrag class="card bg-base-100 border-base-content/10 w-80 shrink-0 overflow-hidden rounded-2xl border">
+        <div
+            cdkDragHandle
+            class="bg-base-200 border-base-content/10 card-title justify-between border-b p-8 cursor-move"
+        >
+            <h2 class="text-base lg:text-lg">{{ column.title }}</h2>
+            <span class="badge badge-sm badge-primary">{{ column.items.length }}</span>
+        </div>
+        <ul
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListConnectedTo]="getConnectedLists(i)"
+            [cdkDropListData]="column.items"
+            [id]="'items-list-' + i"
+            cdkDropList
+            class="card min-h-50 flex-1 gap-4 overflow-y-auto p-4"
+        >
+            @for (item of column.items; track item.id) {
+            <li (click)="openDetailModal(item)" cdkDrag class="group relative cursor-move rounded-lg">
+                <div
+                    class="from-primary via-secondary to-accent absolute inset-0 rounded-lg bg-linear-to-r opacity-60 transition-opacity group-hover:opacity-100"
+                ></div>
+                <span class="bg-base-300 relative m-px block rounded-lg p-4"> {{ item.title }} </span>
+            </li>
+            } @empty {
+            <div class="h-full flex items-center justify-center">
+                <p class="text-lg">Aucune tâche</p>
+                <button>Créer une tâche</button>
+            </div>
+            }
+        </ul>
+    </div>
+    }
+</section>
+
+@if (isOpen()) {
+<app-modal-kanban />
+}

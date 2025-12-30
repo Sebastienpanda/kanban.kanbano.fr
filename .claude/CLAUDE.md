@@ -29,18 +29,21 @@ pnpm test
 ## Architecture
 
 **Component Structure:**
+
 - `App` (root component at `src/app/app.ts`) - Main application container
 - `Kanban` (at `src/app/kanban.ts`) - Kanban board with drag-and-drop functionality
-  - Uses Angular CDK's DragDropModule for drag-and-drop
-  - Manages columns and items with signals
-  - Supports column reordering and cross-column item movement
+    - Uses Angular CDK's DragDropModule for drag-and-drop
+    - Manages columns and items with signals
+    - Supports column reordering and cross-column item movement
 
 **State Management:**
+
 - Local component state uses signals (`signal()`, `computed()`)
 - No global state management library - signals are sufficient for this application
 - Drag-and-drop state is managed through Angular CDK events
 
 **Drag-and-Drop Implementation:**
+
 - Columns are horizontally draggable to reorder
 - Items are draggable within the same column or between columns
 - Uses `moveItemInArray()` for same-column movement
@@ -68,7 +71,7 @@ pnpm test
 - Implement lazy loading for feature routes
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
 - Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
+    - `NgOptimizedImage` does not work for inline base64 images.
 
 ## Accessibility Requirements
 

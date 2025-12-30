@@ -1,13 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-import { REPOSITORY_PROVIDERS } from './shared/providers';
+import { type ApplicationConfig, provideBrowserGlobalErrorListeners } from "@angular/core";
+import { provideRouter } from "@angular/router";
+import { routes } from "./app.routes";
+import { GET_COLUMNS_GATEWAY } from "./application/tokens";
+import { InMemoryKanban } from "./infra/in-memory-kanban";
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    ...REPOSITORY_PROVIDERS,
-  ]
+    providers: [
+        provideBrowserGlobalErrorListeners(),
+        provideRouter(routes),
+        {
+            provide: GET_COLUMNS_GATEWAY,
+            useClass: InMemoryKanban,
+        },
+    ],
 };
