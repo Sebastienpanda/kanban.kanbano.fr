@@ -13,16 +13,19 @@ import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case"
 import { GET_COLUMNS_GATEWAY } from "./tokens";
 import { CdkScrollable } from "@angular/cdk/overlay";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { ModalKanban } from "../shared/ui/modal-kanban";
+import { ModalService } from "../shared/modal.service";
 
 @Component({
     selector: "app-kanban",
     templateUrl: "./kanban.html",
     styleUrl: "./kanban.css",
-    imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle],
+    imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban],
 })
 export class Kanban {
+    protected readonly modalService = inject(ModalService);
+    protected readonly isOpen = this.modalService.isOpen;
     private readonly useCase = new KanbanColumnsUseCase(inject(GET_COLUMNS_GATEWAY));
-
     protected readonly columns = toSignal(this.useCase.all(), {
         initialValue: [],
     });
@@ -48,5 +51,9 @@ export class Kanban {
                 event.currentIndex,
             );
         }
+    }
+
+    openDetailModal(item: Item): void {
+        this.modalService.openModal(item);
     }
 }

@@ -24,13 +24,12 @@
             class="card min-h-50 flex-1 gap-4 overflow-y-auto p-4"
         >
             @for (item of column.items; track item.id) {
-            <li cdkDrag class="group relative cursor-move rounded-lg">
+            <li (click)="openDetailModal(item)" cdkDrag class="group relative cursor-move rounded-lg">
                 <div
                     class="from-primary via-secondary to-accent absolute inset-0 rounded-lg bg-linear-to-r opacity-60 transition-opacity group-hover:opacity-100"
                 ></div>
                 <span class="bg-base-300 relative m-px block rounded-lg p-4"> {{ item.title }} </span>
             </li>
-
             } @empty {
             <div class="h-full flex items-center justify-center">
                 <p class="text-lg">Aucune tâche</p>
@@ -41,3 +40,7 @@
     </div>
     }
 </section>
+
+@if (isOpen()) {
+<app-modal-kanban />
+}
