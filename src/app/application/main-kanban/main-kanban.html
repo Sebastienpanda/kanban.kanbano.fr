@@ -1,7 +1,7 @@
 <main [class]="asideOpen() ? 'asideOpen' : 'asideClose'" class="main">
-    <app-aside (toggleAside)="toggleAside()" [isAsideOpen]="asideOpen()" class="row-span-2" />
+    <app-aside (toggleAside)="toggleAside()" [isAsideOpen]="asideOpen()" />
 
     <app-header />
 
-    <app-kanban class="col-start-2 row-start-2" />
+    <app-kanban />
 </main>

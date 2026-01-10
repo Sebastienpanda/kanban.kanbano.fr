@@ -7,6 +7,9 @@ import { ButtonDirective } from "../directives/button.directive";
     imports: [LucideAngularModule, ButtonDirective],
     templateUrl: "./aside.html",
     styleUrl: "./aside.css",
+    host: {
+        class: "aside-grid",
+    },
 })
 export class Aside {
     readonly isAsideOpen = input.required();

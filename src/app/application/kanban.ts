@@ -13,14 +13,17 @@ import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case"
 import { GET_COLUMNS_GATEWAY } from "./tokens";
 import { CdkScrollable } from "@angular/cdk/overlay";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { ModalKanban } from "../shared/ui/modal/modal-kanban";
-import { ModalService } from "../shared/ui/modal/modal.service";
+import { ModalKanban } from "@shared/ui/modal/modal-kanban";
+import { ModalService } from "@shared/ui/modal/modal.service";
 
 @Component({
     selector: "app-kanban",
     templateUrl: "./kanban.html",
     styleUrl: "./kanban.css",
     imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban],
+    host: {
+        class: "kanban-grid",
+    },
 })
 export class Kanban {
     protected readonly modalService = inject(ModalService);
