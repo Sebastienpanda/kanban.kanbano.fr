@@ -1,6 +1,6 @@
 import { Directive, input } from "@angular/core";
 
-type Variant = "primary" | "secondary" | "outline";
+type Variant = "primary" | "secondary" | "outline" | "circle";
 
 @Directive({
     selector: "[appBtn]",
