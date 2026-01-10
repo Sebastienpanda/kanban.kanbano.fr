@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { LucideAngularModule, Moon, Sun } from "lucide-angular";
-import { ThemeService } from "../theme.service";
+import { ThemeService } from "../../theme.service";
 
 @Component({
     selector: "app-header",

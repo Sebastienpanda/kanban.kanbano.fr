@@ -1,6 +1,6 @@
 import { Component, signal } from "@angular/core";
-import { Aside } from "../shared/ui/aside";
-import { Header } from "../shared/ui/header";
+import { Aside } from "../shared/ui/aside/aside";
+import { Header } from "../shared/ui/header/header";
 import { Kanban } from "./kanban";
 
 @Component({

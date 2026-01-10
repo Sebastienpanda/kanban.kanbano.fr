@@ -17,18 +17,25 @@
         </div>
         <ul
             (cdkDropListDropped)="drop($event)"
-            [cdkDropListConnectedTo]="getConnectedLists(i)"
+            [cdkDropListConnectedTo]="connectedLists()"
             [cdkDropListData]="column.items"
             [id]="'items-list-' + i"
             cdkDropList
             class="card min-h-50 flex-1 gap-4 overflow-y-auto p-4"
         >
             @for (item of column.items; track item.id) {
-            <li (click)="openDetailModal(item)" cdkDrag class="group relative cursor-move rounded-lg">
-                <div
-                    class="from-primary via-secondary to-accent absolute inset-0 rounded-lg bg-linear-to-r opacity-60 transition-opacity group-hover:opacity-100"
-                ></div>
-                <span class="bg-base-300 relative m-px block rounded-lg p-4"> {{ item.title }} </span>
+            <li cdkDrag class="group relative rounded-lg">
+                <button
+                    (click)="openDetailModal(item)"
+                    [attr.aria-label]="'Ouvrir les détails : ' + item.title"
+                    class="w-full text-left cursor-move"
+                    type="button"
+                >
+                    <div
+                        class="from-primary via-secondary to-accent absolute inset-0 rounded-lg bg-linear-to-r opacity-60 transition-opacity group-hover:opacity-100"
+                    ></div>
+                    <span class="bg-base-300 relative m-px block rounded-lg p-4"> {{ item.title }} </span>
+                </button>
             </li>
             } @empty {
             <div class="h-full flex items-center justify-center">

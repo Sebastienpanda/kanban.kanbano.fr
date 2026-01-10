@@ -1,0 +1,10 @@
+<aside class="aside">
+    <div class="content">
+        @if (isAsideOpen()) {
+        <h2>Kanbano</h2>
+        }
+        <button (click)="onToggleAside()" appBtn>
+            <lucide-icon [img]="isAsideOpen() ? ArrowLeft : ArrowRight" />
+        </button>
+    </div>
+</aside>

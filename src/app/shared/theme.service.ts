@@ -55,12 +55,10 @@ export class ThemeService {
 
             root.classList.add("theme-transition");
 
-            root.setAttribute("data-theme", dark ? "dark" : "light");
+            root.dataset["theme"] = dark ? "dark" : "light";
             root.classList.toggle("dark", dark);
 
             localStorage.setItem("theme", dark ? "dark" : "light");
-
-            setTimeout(() => root.classList.remove("theme-transition"), 350);
         });
     }
 }

@@ -1,5 +1,5 @@
-import { Component, inject, viewChild, ElementRef, effect } from "@angular/core";
-import { ModalService } from "../modal.service";
+import { Component, effect, ElementRef, inject, viewChild } from "@angular/core";
+import { ModalService } from "./modal.service";
 
 @Component({
     selector: "app-modal-kanban",

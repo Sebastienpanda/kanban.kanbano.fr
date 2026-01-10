@@ -6,15 +6,15 @@ import {
     moveItemInArray,
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, inject } from "@angular/core";
+import { Component, computed, inject } from "@angular/core";
 import type { Column } from "@domain/models/kanban-column.model";
 import type { Item } from "@domain/models/kanban-item.model";
 import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case";
 import { GET_COLUMNS_GATEWAY } from "./tokens";
 import { CdkScrollable } from "@angular/cdk/overlay";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { ModalKanban } from "../shared/ui/modal-kanban";
-import { ModalService } from "../shared/modal.service";
+import { ModalKanban } from "../shared/ui/modal/modal-kanban";
+import { ModalService } from "../shared/ui/modal/modal.service";
 
 @Component({
     selector: "app-kanban",
@@ -29,6 +29,7 @@ export class Kanban {
     protected readonly columns = toSignal(this.useCase.all(), {
         initialValue: [],
     });
+    protected readonly connectedLists = computed(() => this.columns().map((_, index) => `items-list-${index}`));
 
     getConnectedLists(currentIndex: number): string[] {
         return this.columns()
