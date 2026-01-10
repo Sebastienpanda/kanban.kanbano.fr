@@ -3,7 +3,7 @@
 @import "./base/root.css";
 @import "./base/typographie.css";
 @import "./themes/theme.css";
-@import "./utils/button.css";
+@import "./components/button.css";
 
 /*@theme {*/
 /*    --color-*: initial;*/
