@@ -1,5 +1,5 @@
 import type { Routes } from "@angular/router";
-import { MainKanban } from "./main-kanban";
+import { MainKanban } from "./main-kanban/main-kanban";
 
 const routes: Routes = [
     {
