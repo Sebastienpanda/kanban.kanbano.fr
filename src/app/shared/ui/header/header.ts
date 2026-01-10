@@ -6,6 +6,10 @@ import { ThemeService } from "../../theme.service";
     selector: "app-header",
     imports: [LucideAngularModule],
     templateUrl: "./header.html",
+    styleUrl: "./header.css",
+    host: {
+        class: "header-grid",
+    },
 })
 export class Header {
     protected readonly themeService = inject(ThemeService);
