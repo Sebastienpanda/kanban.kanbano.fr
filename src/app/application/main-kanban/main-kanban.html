@@ -1,7 +1,4 @@
-<main
-    [class]="asideOpen() ? 'grid-cols-[255px_minmax(0,1fr)]' : 'grid-cols-[65px_minmax(0,1fr)]'"
-    class="h-dvh grid transition-[grid-template-columns] duration-300 ease-in-out grid-rows-[auto_1fr]"
->
+<main [class]="asideOpen() ? 'asideOpen' : 'asideClose'" class="main">
     <app-aside (toggleAside)="toggleAside()" [isAsideOpen]="asideOpen()" class="row-span-2" />
 
     <app-header class="col-start-2 row-start-1" />

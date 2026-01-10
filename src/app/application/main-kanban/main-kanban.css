@@ -1,0 +1,14 @@
+.main {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100dvh;
+    transition: grid-template-columns 350ms ease-in-out;
+
+    &.asideOpen {
+        grid-template-columns: 255px minmax(0, 1fr);
+    }
+
+    &.asideClose {
+        grid-template-columns: 65px minmax(0, 1fr);
+    }
+}
