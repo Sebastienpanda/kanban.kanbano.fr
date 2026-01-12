@@ -1,6 +1,6 @@
-import type { Column } from "@domain/models/kanban-column.model";
+import type { Columns } from "@domain/models/kanban-columns.model";
 import type { Observable } from "rxjs";
 
 export interface ColumnsGateway {
-    getAll(): Observable<Column[]>;
+    getAll(): Observable<Columns[]>;
 }

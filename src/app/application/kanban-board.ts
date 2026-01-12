@@ -7,8 +7,8 @@ import {
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
 import { Component, computed, inject } from "@angular/core";
-import type { Column } from "@domain/models/kanban-column.model";
-import type { Item } from "@domain/models/kanban-item.model";
+import type { Columns } from "@domain/models/kanban-columns.model";
+import type { Tasks } from "@domain/models/kanban-tasks.model";
 import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case";
 import { GET_COLUMNS_GATEWAY } from "./tokens";
 import { CdkScrollable } from "@angular/cdk/overlay";
@@ -18,33 +18,27 @@ import { ModalService } from "@shared/ui/modal/modal.service";
 
 @Component({
     selector: "app-kanban",
-    templateUrl: "./kanban.html",
-    styleUrl: "./kanban.css",
+    templateUrl: "./kanban-board.html",
+    styleUrl: "./kanban-board.css",
     imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban],
     host: {
         class: "kanban-grid",
     },
 })
-export class Kanban {
+export class KanbanBoard {
     protected readonly modalService = inject(ModalService);
     protected readonly isOpen = this.modalService.isOpen;
     private readonly useCase = new KanbanColumnsUseCase(inject(GET_COLUMNS_GATEWAY));
     protected readonly columns = toSignal(this.useCase.all(), {
         initialValue: [],
     });
-    protected readonly connectedLists = computed(() => this.columns().map((_, index) => `items-list-${index}`));
+    protected readonly connectedLists = computed(() => this.columns().map((_, index) => `tasks-list-${index}`));
 
-    getConnectedLists(currentIndex: number): string[] {
-        return this.columns()
-            .map((_, index) => `items-list-${index}`)
-            .filter((_, index) => index !== currentIndex);
-    }
-
-    dropColumn(event: CdkDragDrop<Column[]>) {
+    dropColumn(event: CdkDragDrop<Columns[]>) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
 
-    drop(event: CdkDragDrop<Item[]>) {
+    drop(event: CdkDragDrop<Tasks[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
@@ -57,7 +51,7 @@ export class Kanban {
         }
     }
 
-    openDetailModal(item: Item): void {
+    openDetailModal(item: Tasks): void {
         this.modalService.openModal(item);
     }
 }

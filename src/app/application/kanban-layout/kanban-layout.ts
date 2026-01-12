@@ -1,15 +1,15 @@
 import { Component, signal } from "@angular/core";
 import { Aside } from "@shared/ui/aside/aside";
 import { Header } from "@shared/ui/header/header";
-import { Kanban } from "../kanban";
+import { KanbanBoard } from "../kanban-board";
 
 @Component({
-    selector: "app-main-kanban",
-    imports: [Aside, Header, Kanban],
-    templateUrl: "./main-kanban.html",
-    styleUrl: "./main-kanban.css",
+    selector: "app-kanban-layout",
+    imports: [Aside, Header, KanbanBoard],
+    templateUrl: "./kanban-layout.html",
+    styleUrl: "./kanban-layout.css",
 })
-export class MainKanban {
+export class KanbanLayout {
     readonly asideOpen = signal(false);
 
     toggleAside() {

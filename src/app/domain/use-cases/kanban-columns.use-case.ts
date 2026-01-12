@@ -1,11 +1,11 @@
 import type { Observable } from "rxjs";
 import type { ColumnsGateway } from "../gateways/columns.gateway";
-import type { Column } from "../models/kanban-column.model";
+import type { Columns } from "../models/kanban-columns.model";
 
 export class KanbanColumnsUseCase {
     constructor(private readonly _gateway: ColumnsGateway) {}
 
-    all(): Observable<Column[]> {
+    all(): Observable<Columns[]> {
         return this._gateway.getAll();
     }
 }

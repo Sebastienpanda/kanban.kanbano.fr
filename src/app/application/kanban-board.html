@@ -9,18 +9,18 @@
     @for (column of columns(); track column.id; let i = $index) {
     <div cdkDrag class="card">
         <div cdkDragHandle class="header">
-            <h2>{{ column.title }}</h2>
-            <span>{{ column.items.length }}</span>
+            <h2>{{ column.name }}</h2>
+            <span>{{ column.tasks.length }}</span>
         </div>
         <ul
             (cdkDropListDropped)="drop($event)"
             [cdkDropListConnectedTo]="connectedLists()"
-            [cdkDropListData]="column.items"
-            [id]="'items-list-' + i"
+            [cdkDropListData]="column.tasks"
+            [id]="'tasks-list-' + i"
             cdkDropList
             class="list"
         >
-            @for (item of column.items; track item.id) {
+            @for (item of column.tasks; track item.id) {
             <li cdkDrag class="item">
                 <button
                     (click)="openDetailModal(item)"

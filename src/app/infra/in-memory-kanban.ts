@@ -1,304 +1,185 @@
 import { Injectable } from "@angular/core";
 import type { ColumnsGateway } from "@domain/gateways/columns.gateway";
-import type { Column } from "@domain/models/kanban-column.model";
+import type { Columns } from "@domain/models/kanban-columns.model";
 import { BehaviorSubject, defer, type Observable } from "rxjs";
 
 @Injectable({
     providedIn: "root",
 })
 export class InMemoryKanban implements ColumnsGateway {
-    private readonly _columns = new BehaviorSubject<Column[]>([
+    private readonly _columns = new BehaviorSubject<Columns[]>([
         {
-            id: crypto.randomUUID(),
-            title: "Backlog",
-            items: [
+            id: "6629282b-5657-419d-bb1c-cc967e81b91c",
+            name: "À faire",
+            workspaceId: "09e70007-8630-4948-a234-d8d020c5de6e",
+            position: 0,
+            createdAt: "2026-01-11T15:21:41.885+00:00",
+            updatedAt: null,
+            tasks: [
                 {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter l'authentification OAuth2",
+                    id: "1c9e7293-1d8d-4ec5-ada6-7389e5954327",
+                    title: "Sit ut labore esse nobis. - À faire #1",
+                    description:
+                        "Distinctio blanditiis quibusdam. Atque labore expedita magni accusantium ab exercitationem tempora perspiciatis nemo.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 0,
+                    createdAt: "2026-01-11T15:21:41.94167",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter la recherche avancée",
+                    id: "a316aa82-aaf0-4746-bce4-c8b54475049e",
+                    title: "Ex ea aliquid enim numquam libero. - À faire #2",
+                    description:
+                        "Modi dignissimos consequuntur. Neque laudantium nihil enim hic. Aperiam aperiam cumque mollitia ex modi eum.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 1,
+                    createdAt: "2026-01-11T15:21:41.972105",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Créer le système de notifications push",
+                    id: "e4adef33-0787-4d23-8f8c-624a6f7232a0",
+                    title: "Pariatur asperiores harum dicta. - À faire #3",
+                    description:
+                        "Quo esse corrupti laboriosam quae vel. Facilis illo ullam voluptatem id voluptatibus quibusdam id. Omnis nostrum dignissimos incidunt soluta fuga aliquam iure facilis.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 2,
+                    createdAt: "2026-01-11T15:21:41.990079",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Améliorer les performances de la base de données",
+                    id: "2e53e0ae-0787-458d-b38f-24f94f90eae6",
+                    title: "In impedit eveniet error. - À faire #4",
+                    description: "Nisi alias quam. Labore nostrum rerum laudantium praesentium id.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 3,
+                    createdAt: "2026-01-11T15:21:42.006447",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter le support multi-langue",
+                    id: "e85877cf-4dce-4ac3-9641-d68786df34de",
+                    title: "Illum distinctio nulla iste iure rerum. - À faire #5",
+                    description:
+                        "Laborum quae exercitationem nisi iste. Explicabo itaque nam dolorem illo. Totam itaque et voluptatibus esse.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 4,
+                    createdAt: "2026-01-11T15:21:42.022741",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Créer un système de gestion des permissions",
+                    id: "a8908779-1cf6-4d6b-ac66-a0cb83452a18",
+                    title: "Aspernatur deleniti consectetur id commodi repellendus ipsam ipsum. - À faire #6",
+                    description:
+                        "Recusandae repellat distinctio assumenda eveniet laudantium veniam dolorem sed similique. Itaque veniam illum sed.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 5,
+                    createdAt: "2026-01-11T15:21:42.03986",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le SSO avec Azure AD",
+                    id: "095435c7-e01f-44c8-86dc-957564af3a22",
+                    title: "Eaque voluptate dolorem reprehenderit voluptatem tempore fuga. - À faire #7",
+                    description:
+                        "Cupiditate reprehenderit alias occaecati. Assumenda ipsum eius veniam minus asperiores. Eaque accusantium sint est nam.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 6,
+                    createdAt: "2026-01-11T15:21:42.056155",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter l'export PDF des rapports",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer un système de logs centralisé",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter la recherche full-text avec Elasticsearch",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter le support des webhooks",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer une API GraphQL",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le rate limiting",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la compression des images",
+                    id: "454dd8a1-4aca-40dd-893e-233b42e04dd2",
+                    title: "Dolorem omnis quos optio accusamus ducimus totam pariatur. - À faire #8",
+                    description: "In voluptatem vitae et vitae ratione perspiciatis dolore harum officia.",
+                    status: "todo",
+                    columnId: "6629282b-5657-419d-bb1c-cc967e81b91c",
+                    order: 7,
+                    createdAt: "2026-01-11T15:21:42.072562",
+                    updatedAt: null,
                 },
             ],
         },
         {
-            id: crypto.randomUUID(),
-            title: "À faire",
-            items: [
+            id: "cc71c2fc-cd57-41a4-9838-974664caf776",
+            name: "En cours",
+            workspaceId: "09e70007-8630-4948-a234-d8d020c5de6e",
+            position: 1,
+            createdAt: "2026-01-11T15:21:41.905+00:00",
+            updatedAt: null,
+            tasks: [
                 {
-                    id: crypto.randomUUID(),
-                    title: "Créer le composant de profil utilisateur",
+                    id: "289c0897-7630-4246-a4e8-6093e41c599b",
+                    title: "Id occaecati atque saepe soluta labore assumenda repellendus. - En cours #1",
+                    description: "Inventore quod atque placeat numquam quam saepe. Necessitatibus voluptates tenetur.",
+                    status: "in_progress",
+                    columnId: "cc71c2fc-cd57-41a4-9838-974664caf776",
+                    order: 0,
+                    createdAt: "2026-01-11T15:21:42.089053",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le drag & drop pour les fichiers",
+                    id: "3af931b8-fe1a-425e-994e-0b854e960941",
+                    title: "Nemo commodi illum soluta eaque. - En cours #2",
+                    description: "Repellat excepturi provident vel et quos soluta. Corporis inventore aperiam ab.",
+                    status: "in_progress",
+                    columnId: "cc71c2fc-cd57-41a4-9838-974664caf776",
+                    order: 1,
+                    createdAt: "2026-01-11T15:21:42.105096",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la validation des formulaires",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer le système de commentaires",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter les filtres avancés",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la pagination côté serveur",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer le module de messagerie interne",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter l'upload multiple de fichiers",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter les notifications en temps réel",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer le système de favoris",
+                    id: "2f6ffd7a-d6a1-497c-8b43-88eadcaac33c",
+                    title: "Inventore omnis cum. - En cours #3",
+                    description:
+                        "Sint aperiam accusamus natus voluptatibus. Et odio qui. Voluptas tempore a repudiandae accusantium.",
+                    status: "in_progress",
+                    columnId: "cc71c2fc-cd57-41a4-9838-974664caf776",
+                    order: 2,
+                    createdAt: "2026-01-11T15:21:42.120675",
+                    updatedAt: null,
                 },
             ],
         },
         {
-            id: crypto.randomUUID(),
-            title: "En cours",
-            items: [
+            id: "7fe507d5-d565-4bd1-986b-fb91abad6322",
+            name: "Terminé",
+            workspaceId: "09e70007-8630-4948-a234-d8d020c5de6e",
+            position: 2,
+            createdAt: "2026-01-11T15:21:41.921+00:00",
+            updatedAt: null,
+            tasks: [
                 {
-                    id: crypto.randomUUID(),
-                    title: "Intégrer l'API de paiement Stripe",
+                    id: "79d80a44-14a0-41d0-9ee9-f055ed9f32f9",
+                    title: "Unde nemo sequi deleniti. - Terminé #1",
+                    description:
+                        "Sed ipsa omnis. Exercitationem cumque odio voluptate repellendus reprehenderit aut. Quibusdam impedit velit.",
+                    status: "done",
+                    columnId: "7fe507d5-d565-4bd1-986b-fb91abad6322",
+                    order: 0,
+                    createdAt: "2026-01-11T15:21:42.136926",
+                    updatedAt: null,
                 },
                 {
-                    id: crypto.randomUUID(),
-                    title: "Développer le tableau de bord analytique",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer le système de gestion des rôles",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le lazy loading des images",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la synchronisation offline",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer les graphiques de statistiques",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le système de tags",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter l'historique des modifications",
-                },
-            ],
-        },
-        {
-            id: crypto.randomUUID(),
-            title: "En revue",
-            items: [
-                {
-                    id: crypto.randomUUID(),
-                    title: "Refactoriser le service d'authentification",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Optimiser les images pour le web",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter les tests unitaires pour le panier",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le système de cache applicatif",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer la documentation API Swagger",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la gestion des erreurs globale",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Optimiser les requêtes SQL N+1",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le système de templates d'email",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter la validation côté serveur",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer les migrations de base de données",
-                },
-            ],
-        },
-        {
-            id: crypto.randomUUID(),
-            title: "En test",
-            items: [
-                {
-                    id: crypto.randomUUID(),
-                    title: "Corriger le bug du panier vide",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Améliorer l'accessibilité WCAG AA",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Tester le système de paiement en sandbox",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Vérifier la compatibilité mobile",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Tester les performances sous charge",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Valider le flux d'inscription",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Tester l'envoi d'emails",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Vérifier la sécurité XSS/CSRF",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Tester le responsive design sur tablettes",
-                },
-            ],
-        },
-        {
-            id: crypto.randomUUID(),
-            title: "Terminé",
-            items: [
-                {
-                    id: crypto.randomUUID(),
-                    title: "Configurer le pipeline CI/CD",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Mettre en place le système de cache Redis",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer la page d'accueil responsive",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le mode sombre",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Configurer le monitoring avec Sentry",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Mettre en place les sauvegardes automatiques",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer le système de connexion/inscription",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter la réinitialisation de mot de passe",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Ajouter Google Analytics",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Configurer le CDN Cloudflare",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Créer les seeds de base de données",
-                },
-                {
-                    id: crypto.randomUUID(),
-                    title: "Implémenter le système de sessions",
+                    id: "cb04c933-0cb0-4372-b033-7abd547b28e8",
+                    title: "Corrupti alias quam doloremque ad deserunt sunt. - Terminé #2",
+                    description:
+                        "Harum laboriosam commodi corrupti. Perspiciatis deserunt hic dolor. Numquam officia fugiat quidem doloribus tempore.",
+                    status: "done",
+                    columnId: "7fe507d5-d565-4bd1-986b-fb91abad6322",
+                    order: 1,
+                    createdAt: "2026-01-11T15:21:42.153512",
+                    updatedAt: null,
                 },
             ],
         },
     ]);
 
-    getAll(): Observable<Column[]> {
+    getAll(): Observable<Columns[]> {
         return defer(() => this._columns.asObservable());
     }
 }

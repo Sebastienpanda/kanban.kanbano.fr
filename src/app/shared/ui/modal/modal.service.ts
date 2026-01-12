@@ -1,14 +1,14 @@
 import { Injectable, signal } from "@angular/core";
-import type { Item } from "@domain/models/kanban-item.model";
+import type { Tasks } from "@domain/models/kanban-tasks.model";
 
 @Injectable({
     providedIn: "root",
 })
 export class ModalService {
     readonly isOpen = signal<boolean>(false);
-    readonly selectedItem = signal<Item | null>(null);
+    readonly selectedItem = signal<Tasks | null>(null);
 
-    openModal(item: Item): void {
+    openModal(item: Tasks): void {
         this.selectedItem.set(item);
         this.isOpen.set(true);
     }
