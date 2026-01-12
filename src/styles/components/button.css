@@ -1,9 +1,7 @@
 .btn {
     align-items: center;
-    background-color: var(--color-primary);
     border: 1px solid transparent;
     border-radius: 0.375rem;
-    color: var(--color-base-100);
     cursor: pointer;
     display: inline-flex;
     font-size: 1rem;
