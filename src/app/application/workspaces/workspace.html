@@ -1,12 +1,12 @@
 <section
     (cdkDropListDropped)="dropColumn($event)"
-    [cdkDropListData]="columns()"
+    [cdkDropListData]="workspaces().columns"
     cdkDropList
     cdkDropListOrientation="horizontal"
     cdkScrollable
     class="kanban"
 >
-    @for (column of columns(); track column.id; let i = $index) {
+    @for (column of workspaces().columns; track column.id; let i = $index) {
     <div cdkDrag class="card">
         <div cdkDragHandle class="header">
             <h2>{{ column.name }}</h2>

@@ -6,33 +6,30 @@ import {
     moveItemInArray,
     transferArrayItem,
 } from "@angular/cdk/drag-drop";
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, input } from "@angular/core";
 import type { Columns } from "@domain/models/kanban-columns.model";
 import type { Tasks } from "@domain/models/kanban-tasks.model";
-import { KanbanColumnsUseCase } from "@domain/use-cases/kanban-columns.use-case";
-import { GET_COLUMNS_GATEWAY } from "./tokens";
 import { CdkScrollable } from "@angular/cdk/overlay";
-import { toSignal } from "@angular/core/rxjs-interop";
 import { ModalKanban } from "@shared/ui/modal/modal-kanban";
 import { ModalService } from "@shared/ui/modal/modal.service";
+import { Workspaces } from "@domain/models/kanban-workspaces.model";
 
 @Component({
-    selector: "app-kanban",
-    templateUrl: "./kanban-board.html",
-    styleUrl: "./kanban-board.css",
+    selector: "app-workspace",
+    templateUrl: "./workspace.html",
+    styleUrl: "./workspace.css",
     imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban],
     host: {
         class: "kanban-grid",
     },
 })
-export class KanbanBoard {
+export class Workspace {
+    readonly workspaces = input.required<Workspaces>();
     protected readonly modalService = inject(ModalService);
     protected readonly isOpen = this.modalService.isOpen;
-    private readonly useCase = new KanbanColumnsUseCase(inject(GET_COLUMNS_GATEWAY));
-    protected readonly columns = toSignal(this.useCase.all(), {
-        initialValue: [],
-    });
-    protected readonly connectedLists = computed(() => this.columns().map((_, index) => `tasks-list-${index}`));
+    protected readonly connectedLists = computed(() =>
+        this.workspaces().columns.map((_, index) => `tasks-list-${index}`),
+    );
 
     dropColumn(event: CdkDragDrop<Columns[]>) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

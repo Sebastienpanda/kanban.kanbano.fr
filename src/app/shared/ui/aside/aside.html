@@ -7,4 +7,13 @@
             <lucide-icon [img]="isAsideOpen() ? ArrowLeft : ArrowRight" />
         </button>
     </div>
+    <ul>
+        @for (workspace of workspaces(); track workspace.id) {
+        <li>
+            @if (isAsideOpen()) {
+            <button (click)="onSelectWorkspace(workspace.id)">{{ workspace.name }}</button>
+            }
+        </li>
+        }
+    </ul>
 </aside>

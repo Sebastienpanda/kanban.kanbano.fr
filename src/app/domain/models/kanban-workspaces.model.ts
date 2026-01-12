@@ -4,6 +4,6 @@ export type Workspaces = {
     id: string;
     name: string;
     createdAt: string;
-    updatedAt?: string;
+    updatedAt?: string | null;
     columns: Columns[];
 };

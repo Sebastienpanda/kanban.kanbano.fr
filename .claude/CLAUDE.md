@@ -6,7 +6,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 ## Project Overview
 
-This is a KanbanBoard board application built with Angular 21, featuring drag-and-drop functionality for tasks and columns using Angular CDK. The application uses standalone components, signals for state management, and is styled with Tailwind CSS and DaisyUI.
+This is a Workspace board application built with Angular 21, featuring drag-and-drop functionality for tasks and columns using Angular CDK. The application uses standalone components, signals for state management, and is styled with Tailwind CSS and DaisyUI.
 
 ## Development Commands
 
@@ -31,7 +31,7 @@ pnpm test
 **Component Structure:**
 
 - `App` (root component at `src/app/app.ts`) - Main application container
-- `KanbanBoard` (at `src/app/kanban-board.ts`) - KanbanBoard board with drag-and-drop functionality
+- `Workspace` (at `src/app/workspace.ts`) - Workspace board with drag-and-drop functionality
     - Uses Angular CDK's DragDropModule for drag-and-drop
     - Manages columns and items with signals
     - Supports column reordering and cross-column item movement
