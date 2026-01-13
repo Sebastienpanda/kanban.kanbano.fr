@@ -4,11 +4,10 @@ import { Workspaces } from "@domain/models/kanban-workspaces.model";
 import { WorkspaceStateService } from "@shared/workspace-state-service";
 import { RouterLink } from "@angular/router";
 import { InitialLettersPipe } from "@application/initial-letters-pipe";
-import { ButtonDirective } from "@shared/ui/directives/button.directive";
 
 @Component({
     selector: "app-aside",
-    imports: [LucideAngularModule, RouterLink, InitialLettersPipe, ButtonDirective],
+    imports: [LucideAngularModule, RouterLink, InitialLettersPipe],
     templateUrl: "./aside.html",
     styleUrl: "./aside.css",
     changeDetection: ChangeDetectionStrategy.OnPush,

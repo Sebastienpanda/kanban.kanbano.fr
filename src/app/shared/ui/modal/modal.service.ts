@@ -1,13 +1,20 @@
-import { Injectable, signal } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
+import type { Observable } from "rxjs";
+import { tap } from "rxjs";
 import type { Tasks } from "@domain/models/kanban-tasks.model";
+import type { CreateTaskDto } from "@domain/gateways/tasks.gateway";
+import { TasksUseCase } from "@domain/use-cases/tasks.use-case";
+import { TASKS_GATEWAY } from "@application/tokens";
 
 @Injectable({
     providedIn: "root",
 })
 export class ModalService {
-    readonly isOpen = signal<boolean>(false);
+    private readonly tasksUseCase = new TasksUseCase(inject(TASKS_GATEWAY));
+
+    readonly isOpen = signal(false);
     readonly selectedItem = signal<Tasks | null>(null);
-    readonly onTaskUpdated = signal<Tasks | null>(null);
+    readonly onTaskCreated = signal<Tasks | null>(null);
 
     openModal(item: Tasks): void {
         this.selectedItem.set(item);
@@ -19,8 +26,11 @@ export class ModalService {
         this.selectedItem.set(null);
     }
 
-    updateTask(task: Tasks): void {
-        this.selectedItem.set(task);
-        this.onTaskUpdated.set(task);
+    createTask(task: CreateTaskDto): Observable<Tasks> {
+        return this.tasksUseCase.create(task).pipe(tap((createdTask) => this.onTaskCreated.set(createdTask)));
+    }
+
+    updateTask(task: Tasks): Observable<Tasks> {
+        return this.tasksUseCase.update(task).pipe(tap((updatedTask) => this.selectedItem.set(updatedTask)));
     }
 }

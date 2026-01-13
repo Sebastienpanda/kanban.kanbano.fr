@@ -17,7 +17,8 @@
             "@domain/*": ["app/domain/*"],
             "@shared/*": ["app/shared/*"],
             "@infra/*": ["app/infra/*"],
-            "@application/*": ["app/application/*"]
+            "@application/*": ["app/application/*"],
+            "@environments/*": ["environments/*"]
         }
     },
     "angularCompilerOptions": {
