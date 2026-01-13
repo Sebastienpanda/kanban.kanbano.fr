@@ -14,7 +14,11 @@
         "module": "preserve",
         "baseUrl": "./src",
         "paths": {
-            "@domain/*": ["app/domain/*"]
+            "@domain/*": ["app/domain/*"],
+            "@shared/*": ["app/shared/*"],
+            "@infra/*": ["app/infra/*"],
+            "@application/*": ["app/application/*"],
+            "@environments/*": ["environments/*"]
         }
     },
     "angularCompilerOptions": {

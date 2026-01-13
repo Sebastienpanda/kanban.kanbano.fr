@@ -1,16 +1,35 @@
-import { type ApplicationConfig, provideBrowserGlobalErrorListeners } from "@angular/core";
+import { type ApplicationConfig, LOCALE_ID, provideBrowserGlobalErrorListeners } from "@angular/core";
+import { registerLocaleData } from "@angular/common";
 import { provideRouter } from "@angular/router";
+import { provideHttpClient, withFetch } from "@angular/common/http";
+import localeFr from "@angular/common/locales/fr";
 import { routes } from "./app.routes";
-import { GET_COLUMNS_GATEWAY } from "./application/tokens";
-import { InMemoryKanban } from "./infra/in-memory-kanban";
+import { ALL_WORKSPACES_GATEWAY, FIND_ONE_WORKSPACE_GATEWAY, TASKS_GATEWAY } from "@application/tokens";
+import { HttpWorkspacesGateway } from "@infra/http-workspaces.gateway";
+import { HttpTasksGateway } from "@infra/http-tasks.gateway";
+
+registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
+        provideHttpClient(withFetch()),
         {
-            provide: GET_COLUMNS_GATEWAY,
-            useClass: InMemoryKanban,
+            provide: LOCALE_ID,
+            useFactory: () => navigator.language || "fr",
+        },
+        {
+            provide: FIND_ONE_WORKSPACE_GATEWAY,
+            useClass: HttpWorkspacesGateway,
+        },
+        {
+            provide: ALL_WORKSPACES_GATEWAY,
+            useClass: HttpWorkspacesGateway,
+        },
+        {
+            provide: TASKS_GATEWAY,
+            useClass: HttpTasksGateway,
         },
     ],
 };
