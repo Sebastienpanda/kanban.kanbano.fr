@@ -13,12 +13,14 @@ import { CdkScrollable } from "@angular/cdk/overlay";
 import { ModalKanban } from "@shared/ui/modal/modal-kanban";
 import { ModalService } from "@shared/ui/modal/modal.service";
 import { Workspaces } from "@domain/models/kanban-workspaces.model";
+import { BadgeDirective } from "@shared/ui/directives/badge.directive";
+import { Ellipsis, LucideAngularModule } from "lucide-angular";
 
 @Component({
     selector: "app-workspace",
     templateUrl: "./workspace.html",
     styleUrl: "./workspace.css",
-    imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban],
+    imports: [CdkScrollable, CdkDropList, CdkDrag, CdkDragHandle, ModalKanban, BadgeDirective, LucideAngularModule],
     host: {
         class: "kanban-grid",
     },
@@ -30,6 +32,7 @@ export class Workspace {
     protected readonly connectedLists = computed(() =>
         this.workspaces().columns.map((_, index) => `tasks-list-${index}`),
     );
+    protected readonly Ellipsis = Ellipsis;
 
     dropColumn(event: CdkDragDrop<Columns[]>) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

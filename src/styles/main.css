@@ -4,6 +4,7 @@
 @import "./base/typographie.css";
 @import "./themes/theme.css";
 @import "./components/button.css";
+@import "./components/badge.css";
 
 /*@theme {*/
 /*    --color-*: initial;*/

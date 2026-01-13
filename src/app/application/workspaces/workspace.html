@@ -10,7 +10,9 @@
     <div cdkDrag class="card">
         <div cdkDragHandle class="header">
             <h2>{{ column.name }}</h2>
-            <span>{{ column.tasks.length }}</span>
+            <button appBadge>
+                <lucide-icon [img]="Ellipsis" />
+            </button>
         </div>
         <ul
             (cdkDropListDropped)="drop($event)"
