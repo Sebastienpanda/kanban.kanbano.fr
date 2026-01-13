@@ -18,7 +18,7 @@
                 [title]="workspace.name"
                 class="workspace-btn"
             >
-                @if (isAsideOpen()) { {{ workspace.name }} } @else { {{ getWorkspaceInitials(workspace.name) }} }
+                @if (isAsideOpen()) { {{ workspace.name }} } @else { {{ workspace.name | initialLetters }} }
             </button>
         </li>
         }
