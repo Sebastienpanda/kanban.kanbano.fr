@@ -3,7 +3,7 @@
     background-color: var(--color-base-300);
     border-bottom: 1px solid color-mix(in oklab, var(--color-base-content) 10%, transparent);
     display: flex;
-    height: 5.688rem;
+    height: 4.938rem;
     justify-content: space-between;
     padding: 1.5rem;
 

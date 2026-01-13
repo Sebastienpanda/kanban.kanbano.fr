@@ -9,7 +9,7 @@
     }
 
     &.asideClose {
-        grid-template-columns: 65px minmax(0, 1fr);
+        grid-template-columns: 100px minmax(0, 1fr);
     }
 }
 

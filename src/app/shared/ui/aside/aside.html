@@ -1,18 +1,25 @@
 <aside class="aside">
-    <div class="content">
+    <div [class.close]="!isAsideOpen()" class="content">
         @if (isAsideOpen()) {
-        <h2>Kanbano</h2>
+        <h2>
+            <a routerLink="/">Kanbano</a>
+        </h2>
         }
-        <button (click)="onToggleAside()" appBtn>
+        <button (click)="onToggleAside()" class="icon">
             <lucide-icon [img]="isAsideOpen() ? ArrowLeft : ArrowRight" />
         </button>
     </div>
-    <ul>
+    <ul class="workspaces-list">
         @for (workspace of workspaces(); track workspace.id) {
-        <li>
-            @if (isAsideOpen()) {
-            <button (click)="onSelectWorkspace(workspace.id)">{{ workspace.name }}</button>
-            }
+        <li class="workspaces-items">
+            <button
+                (click)="onSelectWorkspace(workspace.id)"
+                [class.active]="selectedWorkspaceId() === workspace.id"
+                [title]="workspace.name"
+                class="workspace-btn"
+            >
+                @if (isAsideOpen()) { {{ workspace.name }} } @else { {{ getWorkspaceInitials(workspace.name) }} }
+            </button>
         </li>
         }
     </ul>
