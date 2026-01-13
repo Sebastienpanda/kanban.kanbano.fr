@@ -17,27 +17,20 @@ import { InitialLettersPipe } from "@application/initial-letters-pipe";
 })
 export class Aside {
     readonly isAsideOpen = input.required<boolean>();
-    readonly toggleAside = output();
     readonly workspaces = input.required<Workspaces[]>();
+    readonly toggleAside = output();
+
     protected readonly ArrowLeft = ArrowLeft;
     protected readonly ArrowRight = ArrowRight;
+
     private readonly workspaceState = inject(WorkspaceStateService);
     protected readonly selectedWorkspaceId = this.workspaceState.selectedWorkspaceId;
 
-    onSelectWorkspace(workspaceId: string) {
+    onSelectWorkspace(workspaceId: string): void {
         this.workspaceState.selectWorkspace(workspaceId);
     }
 
-    onToggleAside() {
+    onToggleAside(): void {
         this.toggleAside.emit();
-    }
-
-    getWorkspaceInitials(name: string): string {
-        return name
-            .split(" ")
-            .map((word) => word.charAt(0))
-            .join("")
-            .toUpperCase()
-            .slice(0, 2);
     }
 }

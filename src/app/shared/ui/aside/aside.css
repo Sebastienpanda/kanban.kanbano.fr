@@ -37,25 +37,23 @@
         gap: 1rem;
         padding: 1rem;
 
-        .workspaces-items {
-            .workspace-btn {
-                border-radius: 8px;
-                cursor: pointer;
-                overflow: hidden;
-                padding: 0.5rem;
-                text-overflow: ellipsis;
-                transition: background-color 350ms ease-in-out;
-                white-space: nowrap;
-                width: 100%;
+        .workspace-btn {
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 0.5rem;
+            text-overflow: ellipsis;
+            transition: background-color 350ms ease-in-out;
+            white-space: nowrap;
+            width: 100%;
 
-                &:hover {
-                    background-color: var(--color-primary);
-                }
+            &:hover {
+                background-color: var(--color-primary);
+            }
 
-                &:is(.active) {
-                    background-color: var(--color-primary);
-                    color: var(--color-primary-content);
-                }
+            &:is(.active) {
+                background-color: var(--color-primary);
+                color: var(--color-primary-content);
             }
         }
     }
