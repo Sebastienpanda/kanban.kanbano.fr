@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular/build:application",
                     "options": {
-                        "outputPath": "dist/kanban-users/browser",
+                        "outputPath": "dist/kanban-users",
                         "browser": "src/main.ts",
                         "tsConfig": "tsconfig.app.json",
                         "assets": [
