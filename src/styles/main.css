@@ -6,59 +6,6 @@
 @import "./components/button.css";
 @import "./components/badge.css";
 
-/*@theme {*/
-/*    --color-*: initial;*/
-/*    --font-montserrat: "Montserrat";*/
-/*    --font-nunito-sans: "Nunito Sans";*/
-
-/*    --animate-fade-in-up: fadeInUp 0.5s ease-out forwards;*/
-/*    --animate-fade-in: fadeIn 0.4s ease-out forwards;*/
-/*    --animate-scale-in: scaleIn 0.3s ease-out forwards;*/
-/*    --animate-blink: blink 1s step-end infinite;*/
-/*    --transition: 350ms ease-in-out;*/
-
-/*    @keyframes fadeInUp {*/
-/*        from {*/
-/*            opacity: 0;*/
-/*            transform: translate3d(0, 20px, 0);*/
-/*        }*/
-/*        to {*/
-/*            opacity: 1;*/
-/*            transform: translate3d(0, 0, 0);*/
-/*        }*/
-/*    }*/
-
-/*    @keyframes fadeIn {*/
-/*        from {*/
-/*            opacity: 0;*/
-/*        }*/
-/*        to {*/
-/*            opacity: 1;*/
-/*        }*/
-/*    }*/
-
-/*    @keyframes scaleIn {*/
-/*        from {*/
-/*            opacity: 0;*/
-/*            transform: scale3d(0.95, 0.95, 1);*/
-/*        }*/
-/*        to {*/
-/*            opacity: 1;*/
-/*            transform: scale3d(1, 1, 1);*/
-/*        }*/
-/*    }*/
-/*    @keyframes blink {*/
-/*        0%,*/
-/*        50% {*/
-/*            opacity: 1;*/
-/*        }*/
-/*        51%,*/
-/*        100% {*/
-/*            opacity: 0;*/
-/*        }*/
-/*    }*/
-/*}*/
-
 /*@utility container {*/
 /*    margin-inline: auto;*/
 /*    padding-inline: 1rem;*/
